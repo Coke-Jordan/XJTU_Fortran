@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "configurations": [
+    {
+      "name": "Debug Fortran & build",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "externalConsole": true,
+      "preLaunchTask": "Build Active Fortran"
+    }
+  ]
+}

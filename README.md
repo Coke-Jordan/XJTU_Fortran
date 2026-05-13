@@ -1,11 +1,12 @@
-# Fortran 上机作业代码集
+# Fortran / C 上机作业代码集
 
-本仓库保存 Fortran 上机作业的源代码、可执行文件和部分运行结果。代码按作业次数分为三个目录，主要覆盖表达式计算、分支循环、数组、模块、数值方法、格式化输入输出、文件读写等内容。
+本仓库保存 Fortran / C 上机作业的源代码、可执行文件和部分运行结果。代码按作业次数分为四个目录，主要覆盖表达式计算、分支循环、数组、模块、数值方法、格式化输入输出、文件读写、C 语言基础语法、指针和 C/Fortran 函数编写等内容。
 
 ## 环境要求
 
 - Windows + PowerShell
 - GNU Fortran（`gfortran`）
+- GNU C Compiler（`gcc`，第四次作业需要）
 - 可选：Visual Studio Code
 - 可选调试：`gdb`
 
@@ -15,6 +16,12 @@
 gfortran -std=f2018 -Wall -Wextra -g
 ```
 
+第四次作业中的 C 程序可使用：
+
+```powershell
+gcc -Wall -Wextra -g
+```
+
 ## 目录结构
 
 ```text
@@ -22,10 +29,11 @@ gfortran -std=f2018 -Wall -Wextra -g
 ├── .vscode/              # VS Code 构建、运行、调试配置
 ├── 第一次上机作业/       # Q1-Q6：基础表达式、输入输出、排序、迭代
 ├── 第二次上机作业/       # Q1-Q6：素数、哥德巴赫猜想、Euler 法、数组与排序模块
-└── 第三次上机作业/       # Q1-Q7：数值积分、线性方程组、集合类型、RK4、高斯消元
+├── 第三次上机作业/       # Q1-Q7：数值积分、线性方程组、集合类型、RK4、高斯消元
+└── 第四次上机作业/       # 01-06：C 语言基础、数组、指针、函数、杨辉三角
 ```
 
-仓库中已经包含若干 `.exe`、`.o`、`.mod` 文件，它们是编译产物；真正需要维护的是 `.f90` 源文件。
+仓库中可能包含若干 `.exe`、`.o`、`.mod` 文件，它们是编译产物；真正需要维护的是 `.f90` 和 `.c` 源文件。
 
 ## 作业内容概览
 
@@ -68,6 +76,18 @@ gfortran -std=f2018 -Wall -Wextra -g
 | `Q7.f90` | 选做题：部分选主元高斯消元法求解线性方程组 |
 | `rk4_module.f90` | 四阶 Runge-Kutta 求解器模块 |
 
+### 第四次上机作业
+
+| 文件 | 内容 |
+| --- | --- |
+| `01_tax.c` | 根据货物价格区间计算税率和应缴税金 |
+| `02_insert_sorted.c` | 将一组数据排序，并把新输入的数按大小插入数组 |
+| `03_squeeze.c` | 使用指针删除 `s1` 中所有与 `s2` 任意字符相同的字符 |
+| `04_digits.c` | 判断不多于 5 位正整数的位数，顺序和逆序输出各位数字 |
+| `05_hexagon_area.c` | 使用海伦公式计算六边形拆分后的四个三角形面积和总面积 |
+| `06_yang_c.c` | C 语言函数 `yang(int n)` 打印杨辉三角 |
+| `06_yang_fortran.f90` | Fortran 子程序 `YANG(n)` 打印杨辉三角 |
+
 ## 使用 VS Code 编译和运行
 
 1. 用 VS Code 打开仓库根目录。
@@ -78,17 +98,19 @@ gfortran -std=f2018 -Wall -Wextra -g
 
 `.vscode/build-fortran.ps1` 会在当前源文件所在目录中查找需要的模块文件，先编译模块，再链接主程序。例如运行 `Q4.f90` 时会自动编译 `euler_solver.f90`。
 
+第四次作业中的 C 文件可以在 VS Code 终端中使用 `gcc` 手动编译运行。
+
 ## 使用命令行编译和运行
 
 在仓库根目录打开 PowerShell。
 
-编译单个源文件：
+编译单个 Fortran 源文件：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\.vscode\build-fortran.ps1 ".\第一次上机作业\Q5.f90"
 ```
 
-编译并运行单个源文件：
+编译并运行单个 Fortran 源文件：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\.vscode\run-fortran.ps1 ".\第二次上机作业\Q4.f90"
@@ -118,6 +140,22 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\.vscode\run-fortran.ps1 ".
 powershell -NoProfile -ExecutionPolicy Bypass -File .\.vscode\run-fortran.ps1 ".\第三次上机作业\Q6_analyze.f90"
 ```
 
+第四次作业的 C 程序可以这样编译运行：
+
+```powershell
+Set-Location ".\第四次上机作业"
+gcc -Wall -Wextra -g 01_tax.c -o 01_tax.exe
+.\01_tax.exe
+```
+
+第四次作业的 Fortran 杨辉三角程序可以这样编译运行：
+
+```powershell
+Set-Location ".\第四次上机作业"
+gfortran -std=f2018 -Wall -Wextra -g 06_yang_fortran.f90 -o 06_yang_fortran.exe
+.\06_yang_fortran.exe
+```
+
 ## 生成文件说明
 
 - `.exe`：Windows 可执行文件。
@@ -127,7 +165,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\.vscode\run-fortran.ps1 ".
 - `第三次上机作业/data1.txt`：Runge-Kutta 方法生成的数据文件。
 - `第三次上机作业/pdf_pages/`：作业 PDF 页面截图或辅助图片。
 
-如需重新构建，可以删除旧的 `.exe`、`.o`、`.mod` 后重新运行构建脚本。
+如需重新构建，可以删除旧的 `.exe`、`.o`、`.mod` 后重新运行构建脚本或手动编译命令。
 
 ## 编码注意事项
 

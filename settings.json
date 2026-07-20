@@ -1,0 +1,13 @@
+{
+  "files.encoding": "utf8",
+  "code-runner.runInTerminal": true,
+  "code-runner.saveFileBeforeRun": true,
+  "code-runner.executorMap": {
+    "fortran": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$workspaceRoot\\.vscode\\run-fortran.ps1\" \"$fullFileName\"",
+    "fortran-modern": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$workspaceRoot\\.vscode\\run-fortran.ps1\" \"$fullFileName\""
+  },
+  "code-runner.executorMapByFileExtension": {
+    ".f90": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$workspaceRoot\\.vscode\\run-fortran.ps1\" \"$fullFileName\"",
+    ".F90": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$workspaceRoot\\.vscode\\run-fortran.ps1\" \"$fullFileName\""
+  }
+}
